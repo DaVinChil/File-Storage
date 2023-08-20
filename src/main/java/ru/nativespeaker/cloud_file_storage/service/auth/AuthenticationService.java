@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.service;
+package ru.nativespeaker.cloud_file_storage.service.auth;
 
 import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
 
