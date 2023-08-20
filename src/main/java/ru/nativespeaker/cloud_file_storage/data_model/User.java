@@ -2,24 +2,26 @@ package ru.nativespeaker.cloud_file_storage.data_model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-@Table(schema = "file_storage", name = "users")
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private long id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @NotNull
     private String email;
 
@@ -29,10 +31,6 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Token token;
-
-    protected User() {
-
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
