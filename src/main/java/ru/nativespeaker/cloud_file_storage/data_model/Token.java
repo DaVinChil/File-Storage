@@ -2,12 +2,14 @@ package ru.nativespeaker.cloud_file_storage.data_model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
 @Table(name = "tokens")
 public class Token {
     @Id
@@ -24,7 +26,10 @@ public class Token {
     private LocalDateTime expirationDate;
 
     @NotNull
-    @OneToOne
-    @JoinColumn
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
+
+    protected Token() {
+
+    }
 }
