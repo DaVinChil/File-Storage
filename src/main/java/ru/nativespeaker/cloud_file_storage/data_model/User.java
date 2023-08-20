@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String password;
 
     @OneToOne(mappedBy = "user")
-    private Token tokens;
+    private Token token;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
