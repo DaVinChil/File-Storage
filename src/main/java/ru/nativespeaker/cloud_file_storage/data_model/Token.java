@@ -28,7 +28,6 @@ public class Token {
     private LocalDateTime expirationDate;
 
     @NotNull
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @OneToOne(mappedBy = "token", cascade = CascadeType.PERSIST)
     private User user;
 }
