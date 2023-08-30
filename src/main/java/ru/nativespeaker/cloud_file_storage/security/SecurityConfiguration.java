@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,7 +42,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeHttpRequest -> authorizeHttpRequest
-                                .requestMatchers("/login")
+                                .requestMatchers("login")
+                                .permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()

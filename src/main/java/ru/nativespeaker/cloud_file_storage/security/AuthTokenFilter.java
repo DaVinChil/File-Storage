@@ -31,6 +31,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         final String authHeader = request.getHeader("auth-token");
+        System.out.println(request.getMethod() + " " + request.getServletPath());
+        System.out.println("HEADER " + (authHeader == null ? "NULL" : authHeader));
         final String token;
         final String userEmail;
         if(authHeader == null) {
