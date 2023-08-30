@@ -3,12 +3,10 @@ package ru.nativespeaker.cloud_file_storage.service.auth;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.data_model.Token;
 import ru.nativespeaker.cloud_file_storage.data_model.User;
 import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.repository.TokenRepository;
 import ru.nativespeaker.cloud_file_storage.repository.UserRepository;
 
 import java.util.Optional;
@@ -35,7 +33,6 @@ public class LoginServiceImp implements LoginService {
         );
 
         Token token = tokenGenerator.getUniqueToken(user.get());
-
         return token.getUuid().describeConstable();
     }
 }

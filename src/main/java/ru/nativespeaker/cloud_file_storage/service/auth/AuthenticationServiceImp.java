@@ -2,7 +2,6 @@ package ru.nativespeaker.cloud_file_storage.service.auth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
 import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
 import ru.nativespeaker.cloud_file_storage.exception.InternalServerException;
 
@@ -18,6 +17,10 @@ public class AuthenticationServiceImp implements AuthenticationService{
 
     @Override
     public String authenticate(AuthorizationRequest request) {
-        return loginService.login(request).orElse(register(request));
+        var token = loginService.login(request).orElse(null);
+        if(token == null) {
+            token = register(request);
+        }
+        return token;
     }
 }

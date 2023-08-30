@@ -19,12 +19,11 @@ public class LogoutService implements LogoutHandler {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         final String authHeader = request.getHeader("auth-token");
-        final String token;
         if(authHeader == null){
             return;
         }
 
-        token = authHeader.substring(7);
+        String token = authHeader.substring(7);
         Token storedToken = tokenRepository.findByUuid(token).orElse(null);
         if(storedToken != null){
             tokenRepository.delete(storedToken);

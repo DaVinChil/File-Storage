@@ -23,7 +23,12 @@ public class TokenGenerator {
     }
 
     public Token getUniqueToken(User user){
-        Token token = Token.builder().uuid(getUniqueUuid()).user(user).expirationDate(LocalDateTime.now().plusHours(12)).build();
+        Token token = Token.builder()
+                .uuid(getUniqueUuid())
+                .user(user)
+                .expirationDate(LocalDateTime.now().plusHours(12))
+                .build();
+        user.setToken(token);
         tokenRepository.save(token);
         return token;
     }
