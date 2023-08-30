@@ -22,14 +22,11 @@ public class TokenGenerator {
         return uuid;
     }
 
-    public Token getUniqueToken(User user){
+    public Token getUniqueToken(){
         Token token = Token.builder()
                 .uuid(getUniqueUuid())
-                .user(user)
                 .expirationDate(LocalDateTime.now().plusHours(12))
                 .build();
-        user.setToken(token);
-        tokenRepository.save(token);
         return token;
     }
 }

@@ -27,7 +27,7 @@ public class Token {
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
 
-    @NotNull
-    @OneToOne(mappedBy = "token", cascade = CascadeType.PERSIST)
-    private User user;
+//    @NotNull
+//    @OneToOne(mappedBy = "token", cascade = CascadeType.PERSIST)
+//    private User user;
 }

@@ -32,7 +32,9 @@ public class LoginServiceImp implements LoginService {
                 )
         );
 
-        Token token = tokenGenerator.getUniqueToken(user.get());
+        Token token = tokenGenerator.getUniqueToken();
+        User loginUser = user.get();
+        loginUser.setToken(token);
         return token.getUuid().describeConstable();
     }
 }

@@ -29,7 +29,9 @@ public class RegistrationServiceImp implements RegistrationService{
                 .email(request.getLogin())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
-        Token token = tokenGenerator.getUniqueToken(user);
+        Token token = tokenGenerator.getUniqueToken();
+        user.setToken(token);
+        userRepository.save(user);
 
         return token.getUuid().describeConstable();
     }
