@@ -1,10 +1,11 @@
-package ru.nativespeaker.cloud_file_storage.data_model;
+package ru.nativespeaker.cloud_file_storage.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.nativespeaker.cloud_file_storage.auth.token.Token;
 
 import java.util.Collection;
 
