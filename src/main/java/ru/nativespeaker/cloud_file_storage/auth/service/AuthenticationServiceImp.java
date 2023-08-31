@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.service.auth;
+package ru.nativespeaker.cloud_file_storage.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

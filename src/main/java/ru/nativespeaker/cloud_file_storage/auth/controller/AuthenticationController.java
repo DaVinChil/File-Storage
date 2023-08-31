@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.controller;
+package ru.nativespeaker.cloud_file_storage.auth.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.data_model;
+package ru.nativespeaker.cloud_file_storage.auth.token;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -26,8 +26,4 @@ public class Token {
     @NotNull
     @Column(name = "expiration_date")
     private LocalDateTime expirationDate;
-
-//    @NotNull
-//    @OneToOne(mappedBy = "token", cascade = CascadeType.PERSIST)
-//    private User user;
 }

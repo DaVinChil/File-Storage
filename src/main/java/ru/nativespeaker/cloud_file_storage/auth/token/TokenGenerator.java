@@ -1,10 +1,7 @@
-package ru.nativespeaker.cloud_file_storage.service.auth;
+package ru.nativespeaker.cloud_file_storage.auth.token;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.nativespeaker.cloud_file_storage.data_model.Token;
-import ru.nativespeaker.cloud_file_storage.data_model.User;
-import ru.nativespeaker.cloud_file_storage.repository.TokenRepository;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

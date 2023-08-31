@@ -2,6 +2,7 @@ package ru.nativespeaker.cloud_file_storage.data_model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import ru.nativespeaker.cloud_file_storage.user.User;
 
 @Entity
 @Table(name = "files")
@@ -13,7 +14,7 @@ public class File {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @NotNull
@@ -25,6 +26,7 @@ public class File {
     private String fileName;
 
     @NotNull
-    @Column(name = "content")
+    @Lob
+    @Column(name = "content", columnDefinition = "blob")
     private byte[] content;
 }

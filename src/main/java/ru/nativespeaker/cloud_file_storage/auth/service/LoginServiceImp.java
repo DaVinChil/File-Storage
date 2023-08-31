@@ -1,13 +1,14 @@
-package ru.nativespeaker.cloud_file_storage.service.auth;
+package ru.nativespeaker.cloud_file_storage.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import ru.nativespeaker.cloud_file_storage.data_model.Token;
-import ru.nativespeaker.cloud_file_storage.data_model.User;
+import ru.nativespeaker.cloud_file_storage.auth.token.TokenGenerator;
+import ru.nativespeaker.cloud_file_storage.auth.token.Token;
+import ru.nativespeaker.cloud_file_storage.user.User;
 import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.repository.UserRepository;
+import ru.nativespeaker.cloud_file_storage.user.UserRepository;
 
 import java.util.Optional;
 
@@ -35,6 +36,7 @@ public class LoginServiceImp implements LoginService {
         Token token = tokenGenerator.getUniqueToken();
         User loginUser = user.get();
         loginUser.setToken(token);
+        userRepository.save(loginUser);
         return token.getUuid().describeConstable();
     }
 }

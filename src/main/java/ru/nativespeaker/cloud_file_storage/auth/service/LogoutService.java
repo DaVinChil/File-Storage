@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.service.auth;
+package ru.nativespeaker.cloud_file_storage.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
-import ru.nativespeaker.cloud_file_storage.data_model.Token;
-import ru.nativespeaker.cloud_file_storage.repository.TokenRepository;
+import ru.nativespeaker.cloud_file_storage.auth.token.Token;
+import ru.nativespeaker.cloud_file_storage.auth.token.TokenRepository;
 
 @Service
 @RequiredArgsConstructor
