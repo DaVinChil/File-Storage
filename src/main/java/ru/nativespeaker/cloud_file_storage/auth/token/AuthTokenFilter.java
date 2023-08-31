@@ -34,8 +34,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         final String authHeader = request.getHeader("auth-token");
-        System.out.println(request.getMethod() + " " + request.getServletPath());
-        System.out.println("HEADER " + (authHeader == null ? "NULL" : authHeader));
         final String token;
         final String userEmail;
         if(authHeader == null) {
@@ -45,7 +43,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         token = authHeader.substring(7);
         userEmail = tokenService.getUserEmail(token);
-        System.out.println("USER EMAIL: " + userEmail);
         if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
             boolean isTokenValid = tokenService.isExist(token);
