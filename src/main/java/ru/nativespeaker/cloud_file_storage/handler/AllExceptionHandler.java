@@ -32,7 +32,6 @@ public class AllExceptionHandler {
     @ExceptionHandler({NoSuchFileException.class, MissingServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionResponse badFileName(Exception e) {
-        System.out.println("HANDELLING");
         return new ExceptionResponse(e.getMessage(), atomicLong.getAndIncrement());
     }
 }
