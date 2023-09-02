@@ -2,6 +2,7 @@ package ru.nativespeaker.cloud_file_storage.auth.token;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.nativespeaker.cloud_file_storage.user.User;
 import ru.nativespeaker.cloud_file_storage.exception.InternalServerException;
 import ru.nativespeaker.cloud_file_storage.user.UserRepository;
@@ -19,12 +20,14 @@ public class AuthTokenService {
         return tokenRepository.existsByUuid(token);
     }
 
+    @Transactional
     public boolean isValid(String token) {
         if(!isExist(token)) {
             return false;
         }
         Token entityToken = tokenRepository.findByUuid(token).get();
         if(entityToken.getExpirationDate().isBefore(LocalDateTime.now())) {
+            tokenRepository.delete(entityToken);
             return false;
         }
         return true;
