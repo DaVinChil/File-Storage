@@ -3,7 +3,6 @@ package ru.nativespeaker.cloud_file_storage.file;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.user.User;
 
 @Entity
@@ -24,7 +23,6 @@ public class File {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @NotNull
     @Column(name = "hash")
     private String hash;
 
@@ -35,7 +33,6 @@ public class File {
     @Column(name = "file_type")
     private String fileType;
 
-    @NotNull
     @Lob
     @Column(name = "content", columnDefinition = "blob")
     private byte[] content;
