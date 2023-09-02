@@ -37,17 +37,21 @@ public class FileControllerImp implements FileController {
         File file = fileService.getFile(fileName);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         HttpHeaders contentTypeHeader = new HttpHeaders();
-        HttpEntity<String> hashPart = new HttpEntity<>(file.getHash());
-        body.add("hash", hashPart);
-        contentTypeHeader.setContentType(MediaType.valueOf(file.getFileType()));
-        HttpEntity<String> filePart = new HttpEntity<>(new String(file.getContent(), StandardCharsets.UTF_8), contentTypeHeader);
-        body.add("file", filePart);
+        if(file.getHash() != null && !file.getHash().isBlank()) {
+            HttpEntity<String> hashPart = new HttpEntity<>(file.getHash());
+            body.add("hash", hashPart);
+        }
+        if(file.getContent() != null && file.getContent().length != 0) {
+            contentTypeHeader.setContentType(MediaType.valueOf(file.getFileType()));
+            HttpEntity<String> filePart = new HttpEntity<>(new String(file.getContent(), StandardCharsets.UTF_8), contentTypeHeader);
+            body.add("file", filePart);
+        }
         return body;
     }
 
     @Override
     public void changeFileName(String fileName, ChangeFileNameRequest newFileName) {
-        fileService.changeFileName(fileName, newFileName.name());
+        fileService.changeFileName(fileName, newFileName.fileName());
     }
 
     @Override

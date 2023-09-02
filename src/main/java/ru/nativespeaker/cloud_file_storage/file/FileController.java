@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 public interface FileController {
     @PostMapping(value = "/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    void uploadFile(@RequestParam("hash") String hash, @RequestParam("file") MultipartFile file, @RequestParam("filename") String fileName);
+    void uploadFile(@RequestParam(value = "hash", required = false) String hash, @RequestParam(value = "file", required = false) MultipartFile file, @RequestParam("filename") String fileName);
     @DeleteMapping(value = "/file")
     void deleteFile(@RequestParam("filename") String fileName);
     @GetMapping(value = "/file", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
