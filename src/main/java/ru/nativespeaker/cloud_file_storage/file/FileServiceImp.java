@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import ru.nativespeaker.cloud_file_storage.exception.NoSuchFileException;
 import ru.nativespeaker.cloud_file_storage.user.User;
@@ -20,15 +21,16 @@ public class FileServiceImp implements FileService {
     public void uploadFile(String hash, MultipartFile multipartFile, String fileName) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         File fileToStore = File.builder()
-                .fileType(multipartFile.getContentType())
+                .fileType(multipartFile == null ? null : multipartFile.getContentType())
                 .fileName(fileName)
-                .content(multipartFile.getBytes())
+                .content(multipartFile == null ? null : multipartFile.getBytes())
                 .hash(hash)
                 .user(user).build();
         fileRepository.save(fileToStore);
     }
 
     @Override
+    @Transactional
     public void deleteFile(String fileName) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         fileRepository.deleteByFileNameAndUser_Id(fileName, user.getId());
