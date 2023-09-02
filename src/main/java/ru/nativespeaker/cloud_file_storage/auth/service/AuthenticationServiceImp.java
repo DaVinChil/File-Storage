@@ -17,7 +17,7 @@ public class AuthenticationServiceImp implements AuthenticationService{
 
     @Override
     public String authenticate(AuthorizationRequest request) {
-        var token = loginService.login(request).orElse(null);
+        var token = loginService.login(request);
         if(token == null) {
             token = register(request);
         }

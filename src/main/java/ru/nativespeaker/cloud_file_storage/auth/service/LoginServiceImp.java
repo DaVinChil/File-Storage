@@ -3,6 +3,7 @@ package ru.nativespeaker.cloud_file_storage.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.auth.token.TokenGenerator;
 import ru.nativespeaker.cloud_file_storage.auth.token.Token;
@@ -20,10 +21,10 @@ public class LoginServiceImp implements LoginService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public Optional<String> login(AuthorizationRequest request) {
+    public String login(AuthorizationRequest request) {
         Optional<User> user = userRepository.findByEmail(request.getLogin());
         if (user.isEmpty()) {
-            return Optional.empty();
+            return null;
         }
 
         authenticationManager.authenticate(
@@ -37,6 +38,6 @@ public class LoginServiceImp implements LoginService {
         User loginUser = user.get();
         loginUser.setToken(token);
         userRepository.save(loginUser);
-        return token.getUuid().describeConstable();
+        return token.getUuid();
     }
 }
