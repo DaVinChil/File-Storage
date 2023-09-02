@@ -1,4 +1,6 @@
 package ru.nativespeaker.cloud_file_storage.dto;
 
-public record ChangeFileNameRequest(String name) {
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record ChangeFileNameRequest(@JsonProperty("filename") String fileName) {
 }
