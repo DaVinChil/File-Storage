@@ -1,6 +1,7 @@
 package ru.nativespeaker.cloud_file_storage.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -19,7 +20,7 @@ public class LogoutService implements LogoutHandler {
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         final String authHeader = request.getHeader("auth-token");
-        if(authHeader == null){
+        if(authHeader == null || !authHeader.startsWith("Bearer ")){
             return;
         }
 

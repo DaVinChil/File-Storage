@@ -12,8 +12,10 @@ import ru.nativespeaker.cloud_file_storage.dto.ChangeFileNameRequest;
 
 import org.springframework.http.HttpHeaders;
 import ru.nativespeaker.cloud_file_storage.dto.FileNameSizeDto;
+import ru.nativespeaker.cloud_file_storage.user.User;
 
 import java.nio.charset.StandardCharsets;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +25,18 @@ public class FileControllerImp implements FileController {
     private final FileService fileService;
 
     @Override
-    public void uploadFile(String hash, MultipartFile file, String fileName) {
-        fileService.uploadFile(hash, file, fileName);
+    public void uploadFile(String hash, MultipartFile file, String fileName, Principal user) {
+        fileService.uploadFile(hash, file, fileName, (User) user);
     }
 
     @Override
-    public void deleteFile(String fileName) {
-        fileService.deleteFile(fileName);
+    public void deleteFile(String fileName, Principal user) {
+        fileService.deleteFile(fileName, (User) user);
     }
 
     @Override
-    public MultiValueMap<String, Object> getFile(String fileName) {
-        File file = fileService.getFile(fileName);
+    public MultiValueMap<String, Object> getFile(String fileName, Principal user) {
+        File file = fileService.getFile(fileName, (User) user);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         HttpHeaders contentTypeHeader = new HttpHeaders();
         if(file.getHash() != null && !file.getHash().isBlank()) {
@@ -50,13 +52,13 @@ public class FileControllerImp implements FileController {
     }
 
     @Override
-    public void changeFileName(String fileName, ChangeFileNameRequest newFileName) {
-        fileService.changeFileName(fileName, newFileName.fileName());
+    public void changeFileName(String fileName, ChangeFileNameRequest newFileName, Principal user) {
+        fileService.changeFileName(fileName, newFileName.fileName(), (User) user);
     }
 
     @Override
-    public List<FileNameSizeDto> getAvailableFileList(int limit) {
-        return convertListOfFilesToDto(fileService.getFirstNFiles(limit));
+    public List<FileNameSizeDto> getAvailableFileList(int limit, Principal user) {
+        return convertListOfFilesToDto(fileService.getFirstNFiles(limit, (User) user));
     }
 
     @Override

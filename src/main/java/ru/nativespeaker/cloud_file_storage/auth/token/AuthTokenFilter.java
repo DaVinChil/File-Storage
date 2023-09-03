@@ -39,13 +39,13 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         final String authHeader = request.getHeader("auth-token");
         final String token;
-        if (authHeader == null) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
         token = authHeader.substring(7);
-        if(!tokenService.isValid(token)) {
+        if(!tokenService.isValidOrDelete(token)) {
             filterChain.doFilter(request,response);
             return;
         }

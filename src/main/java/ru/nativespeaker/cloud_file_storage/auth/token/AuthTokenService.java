@@ -21,7 +21,7 @@ public class AuthTokenService {
     }
 
     @Transactional
-    public boolean isValid(String token) {
+    public boolean isValidOrDelete(String token) {
         if(!isExist(token)) {
             return false;
         }
