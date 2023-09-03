@@ -2,7 +2,6 @@ package ru.nativespeaker.cloud_file_storage.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.nativespeaker.cloud_file_storage.auth.token.Token;
 
 import java.util.Optional;
 

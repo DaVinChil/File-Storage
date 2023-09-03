@@ -3,7 +3,6 @@ package ru.nativespeaker.cloud_file_storage.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.auth.token.TokenGenerator;
 import ru.nativespeaker.cloud_file_storage.auth.token.Token;
