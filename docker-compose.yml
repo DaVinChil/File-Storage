@@ -1,0 +1,22 @@
+version: '3'
+services:
+  file_storage:
+    build: .
+    container_name: file_storage
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/file_storage
+    ports:
+      - 8080:8080
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - /mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=mysql
+      - MYSQL_DATABASE=file_storage
+
