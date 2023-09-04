@@ -11,8 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import ru.nativespeaker.cloud_file_storage.user.User;
-import ru.nativespeaker.cloud_file_storage.user.UserRepository;
+import ru.nativespeaker.cloud_file_storage.auth.user.User;
+import ru.nativespeaker.cloud_file_storage.auth.user.UserRepository;
 
 import java.io.IOException;
 import java.util.Optional;

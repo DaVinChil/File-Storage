@@ -6,9 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.auth.token.TokenGenerator;
 import ru.nativespeaker.cloud_file_storage.auth.token.Token;
-import ru.nativespeaker.cloud_file_storage.user.User;
-import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.user.UserRepository;
+import ru.nativespeaker.cloud_file_storage.auth.user.User;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.user.UserRepository;
 
 import java.util.Optional;
 

@@ -27,7 +27,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenFilter;
-import ru.nativespeaker.cloud_file_storage.user.UserRepository;
+import ru.nativespeaker.cloud_file_storage.auth.user.UserRepository;
 
 @Configuration
 @EnableWebSecurity

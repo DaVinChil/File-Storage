@@ -2,8 +2,8 @@ package ru.nativespeaker.cloud_file_storage.auth.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.exception.InternalServerException;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerException;
 
 @Service
 @RequiredArgsConstructor

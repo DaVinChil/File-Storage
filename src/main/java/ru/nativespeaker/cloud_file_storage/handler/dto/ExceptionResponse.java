@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.dto;
+package ru.nativespeaker.cloud_file_storage.handler.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

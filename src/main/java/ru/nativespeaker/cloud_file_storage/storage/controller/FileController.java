@@ -1,12 +1,12 @@
-package ru.nativespeaker.cloud_file_storage.file;
+package ru.nativespeaker.cloud_file_storage.storage.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.nativespeaker.cloud_file_storage.dto.ChangeFileNameRequest;
-import ru.nativespeaker.cloud_file_storage.dto.FileNameSizeDto;
+import ru.nativespeaker.cloud_file_storage.storage.dto.ChangeFileNameRequest;
+import ru.nativespeaker.cloud_file_storage.storage.dto.FileNameSizeDto;
 
 import java.security.Principal;
 import java.util.List;

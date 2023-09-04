@@ -1,9 +1,9 @@
-package ru.nativespeaker.cloud_file_storage.file;
+package ru.nativespeaker.cloud_file_storage.storage.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import ru.nativespeaker.cloud_file_storage.user.User;
+import ru.nativespeaker.cloud_file_storage.auth.user.User;
 
 @Entity
 @Getter
@@ -12,7 +12,7 @@ import ru.nativespeaker.cloud_file_storage.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "files")
-public class File {
+public class UserFile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "file_id")

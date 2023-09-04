@@ -5,10 +5,10 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.nativespeaker.cloud_file_storage.dto.ExceptionResponse;
-import ru.nativespeaker.cloud_file_storage.exception.InternalServerException;
-import ru.nativespeaker.cloud_file_storage.exception.NoSuchFileException;
-import ru.nativespeaker.cloud_file_storage.exception.UserAlreadyExistsException;
+import ru.nativespeaker.cloud_file_storage.handler.dto.ExceptionResponse;
+import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerException;
+import ru.nativespeaker.cloud_file_storage.handler.exception.NoSuchFileException;
+import ru.nativespeaker.cloud_file_storage.handler.exception.UserAlreadyExistsException;
 
 import java.util.concurrent.atomic.AtomicLong;
 

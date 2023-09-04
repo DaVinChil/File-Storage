@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nativespeaker.cloud_file_storage.auth.service.AuthenticationService;
-import ru.nativespeaker.cloud_file_storage.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.dto.AuthorizationResponse;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationResponse;
 
 @RestController
 @RequiredArgsConstructor

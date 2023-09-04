@@ -1,15 +1,18 @@
-package ru.nativespeaker.cloud_file_storage.file;
+package ru.nativespeaker.cloud_file_storage.storage.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import ru.nativespeaker.cloud_file_storage.exception.NoSuchFileException;
-import ru.nativespeaker.cloud_file_storage.user.User;
+import ru.nativespeaker.cloud_file_storage.handler.exception.NoSuchFileException;
+import ru.nativespeaker.cloud_file_storage.storage.model.UserFile;
+import ru.nativespeaker.cloud_file_storage.storage.repository.FileRepository;
+import ru.nativespeaker.cloud_file_storage.auth.user.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,38 +21,38 @@ public class FileServiceImp implements FileService {
 
     @SneakyThrows(value = IOException.class)
     @Override
-    public void uploadFile(String hash, MultipartFile multipartFile, String fileName, User user) {
-        File fileToStore = File.builder()
+    public UserFile uploadFile(String hash, MultipartFile multipartFile, String fileName, User user) {
+        UserFile userFileToStore = UserFile.builder()
                 .fileType(multipartFile == null ? null : multipartFile.getContentType())
                 .fileName(fileName)
                 .content(multipartFile == null ? null : multipartFile.getBytes())
                 .hash(hash)
                 .user(user).build();
-        fileRepository.save(fileToStore);
+        return fileRepository.save(userFileToStore);
     }
 
     @Override
     @Transactional
-    public void deleteFile(String fileName, User user) {
-        fileRepository.deleteByFileNameAndUser_Id(fileName, user.getId());
+    public Optional<UserFile> deleteFile(String fileName, User user) {
+        return fileRepository.deleteByFileNameAndUser_Id(fileName, user.getId());
     }
 
     @Override
-    public File getFile(String fileName, User user) {
+    public UserFile getFile(String fileName, User user) {
         return fileRepository.findByFileNameAndUser_Id(fileName, user.getId())
                 .orElseThrow(() -> new NoSuchFileException("Wrong file name or no file with such name."));
     }
 
     @Override
-    public void changeFileName(String fileName, String newFileName, User user) {
-        File file = fileRepository.findByFileNameAndUser_Id(fileName, user.getId())
+    public UserFile changeFileName(String fileName, String newFileName, User user) {
+        UserFile userFile = fileRepository.findByFileNameAndUser_Id(fileName, user.getId())
                 .orElseThrow(() -> new NoSuchFileException("Wrong file name or no file with such name."));
-        file.setFileName(newFileName);
-        fileRepository.save(file);
+        userFile.setFileName(newFileName);
+        return fileRepository.save(userFile);
     }
 
     @Override
-    public List<File> getFirstNFiles(int limit, User user) {
+    public List<UserFile> getFirstNFiles(int limit, User user) {
         return fileRepository.findFirstNFiles(limit, user.getId());
     }
 }

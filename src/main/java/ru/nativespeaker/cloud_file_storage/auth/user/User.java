@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.user;
+package ru.nativespeaker.cloud_file_storage.auth.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

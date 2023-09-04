@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage.dto;
+package ru.nativespeaker.cloud_file_storage.auth.dto;
 
 import lombok.Data;
 
