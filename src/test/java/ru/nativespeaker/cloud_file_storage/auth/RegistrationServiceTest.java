@@ -1,13 +1,12 @@
 package ru.nativespeaker.cloud_file_storage.auth;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationRequest;
 import ru.nativespeaker.cloud_file_storage.auth.service.RegistrationServiceImp;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenGenerator;
@@ -43,7 +42,7 @@ public class RegistrationServiceTest {
                 AuthToken.builder().uuid(uuid).build());
 
         Optional<String> res = registrationService.register(
-                new AuthorizationRequest("login", "password"));
+                new AuthenticationRequest("login", "password"));
         assertTrue(res.isPresent());
         assertEquals(uuid, res.get());
     }
@@ -52,6 +51,6 @@ public class RegistrationServiceTest {
     public void register_shouldFail() {
         when(userRepository.existsByEmail(any())).thenReturn(true);
         assertThrows(UserAlreadyExistsException.class,
-                () -> registrationService.register(new AuthorizationRequest("login", "password")));
+                () -> registrationService.register(new AuthenticationRequest("login", "password")));
     }
 }

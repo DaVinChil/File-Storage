@@ -4,16 +4,16 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 import ru.nativespeaker.cloud_file_storage.auth.service.AuthenticationService;
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationResponse;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationResponse;
 
 @RestController
 @RequiredArgsConstructor
 public class AuthenticationControllerImp implements AuthenticationController{
     private final AuthenticationService authenticationService;
     @Override
-    public AuthorizationResponse authenticate(AuthorizationRequest request) {
-        return new AuthorizationResponse(authenticationService.authenticate(request));
+    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        return new AuthenticationResponse(authenticationService.authenticate(request));
     }
 
     @Override

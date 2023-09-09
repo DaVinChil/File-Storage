@@ -7,7 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationRequest;
 import ru.nativespeaker.cloud_file_storage.auth.service.LoginServiceImp;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenGenerator;
@@ -34,7 +34,7 @@ public class LoginServiceTest {
     public void login_shouldReturnNull() {
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
 
-        assertNull(loginService.login(new AuthorizationRequest("login", "password")));
+        assertNull(loginService.login(new AuthenticationRequest("login", "password")));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class LoginServiceTest {
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
         when(userRepository.save(captor.capture())).thenAnswer(inv -> inv.getArgument(0));
 
-        String resToken = loginService.login(new AuthorizationRequest(login, pass));
+        String resToken = loginService.login(new AuthenticationRequest(login, pass));
 
         assertEquals(resToken, token);
 

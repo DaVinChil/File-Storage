@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenGenerator;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.user.User;
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationRequest;
 import ru.nativespeaker.cloud_file_storage.handler.exception.UserAlreadyExistsException;
 import ru.nativespeaker.cloud_file_storage.auth.user.UserRepository;
 
@@ -20,7 +20,7 @@ public class RegistrationServiceImp implements RegistrationService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Optional<String> register(AuthorizationRequest request) {
+    public Optional<String> register(AuthenticationRequest request) {
         if(userRepository.existsByEmail(request.getLogin())){
             throw new UserAlreadyExistsException("User with " + request.getLogin() + " login already exists");
         }

@@ -1,8 +1,8 @@
 package ru.nativespeaker.cloud_file_storage.auth.service;
 
-import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
+import ru.nativespeaker.cloud_file_storage.auth.dto.AuthenticationRequest;
 
 public interface AuthenticationService {
-    String register(AuthorizationRequest request);
-    String authenticate(AuthorizationRequest request);
+    String register(AuthenticationRequest request);
+    String authenticate(AuthenticationRequest request);
 }
