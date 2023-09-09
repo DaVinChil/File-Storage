@@ -9,22 +9,26 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class AuthTokenService {
-    private final TokenRepository tokenRepository;
+    private final AuthTokenRepository tokenRepository;
 
     public boolean isExist(String token) {
         return tokenRepository.existsByUuid(token);
     }
 
-    @Transactional
-    public boolean isValidOrDelete(String token) {
+
+    public boolean isValid(String token) {
         if(!isExist(token)) {
             return false;
         }
-        Token entityToken = tokenRepository.findByUuid(token).get();
+        AuthToken entityToken = tokenRepository.findByUuid(token).get();
         if(entityToken.getExpirationDate().isBefore(LocalDateTime.now())) {
-            tokenRepository.delete(entityToken);
             return false;
         }
         return true;
+    }
+
+    @Transactional
+    public void delete(String token) {
+        tokenRepository.deleteByUuid(token);
     }
 }

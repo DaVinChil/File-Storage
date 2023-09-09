@@ -1,4 +1,4 @@
-package ru.nativespeaker.cloud_file_storage;
+package ru.nativespeaker.cloud_file_storage.storage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;

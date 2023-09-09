@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import ru.nativespeaker.cloud_file_storage.auth.token.Token;
+import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 
 import java.util.Collection;
 
@@ -32,7 +32,7 @@ public class User implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "token_id", referencedColumnName = "token_id")
-    private Token token;
+    private AuthToken token;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

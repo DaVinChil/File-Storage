@@ -44,7 +44,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
 
         token = authHeader.substring(7);
-        if(!tokenService.isValidOrDelete(token)) {
+        if(!tokenService.isValid(token)) {
+            tokenService.delete(token);
             filterChain.doFilter(request,response);
             return;
         }

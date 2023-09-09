@@ -8,8 +8,8 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class TokenGenerator {
-    private final TokenRepository tokenRepository;
+public class AuthTokenGenerator {
+    private final AuthTokenRepository tokenRepository;
 
     private String getUniqueUuid() {
         String uuid;
@@ -19,8 +19,8 @@ public class TokenGenerator {
         return uuid;
     }
 
-    public Token getUniqueToken(){
-        Token token = Token.builder()
+    public AuthToken getUniqueToken(){
+        AuthToken token = AuthToken.builder()
                 .uuid(getUniqueUuid())
                 .expirationDate(LocalDateTime.now().plusHours(12))
                 .build();

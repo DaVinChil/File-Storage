@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-import ru.nativespeaker.cloud_file_storage.auth.token.TokenGenerator;
-import ru.nativespeaker.cloud_file_storage.auth.token.Token;
+import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenGenerator;
+import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.user.User;
 import ru.nativespeaker.cloud_file_storage.auth.dto.AuthorizationRequest;
 import ru.nativespeaker.cloud_file_storage.auth.user.UserRepository;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LoginServiceImp implements LoginService {
-    private final TokenGenerator tokenGenerator;
+    private final AuthTokenGenerator tokenGenerator;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
 
@@ -33,7 +33,7 @@ public class LoginServiceImp implements LoginService {
                 )
         );
 
-        Token token = tokenGenerator.getUniqueToken();
+        AuthToken token = tokenGenerator.getUniqueToken();
         User loginUser = user.get();
         loginUser.setToken(token);
         userRepository.save(loginUser);
