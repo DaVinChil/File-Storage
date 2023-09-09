@@ -7,6 +7,7 @@ import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenRepository;

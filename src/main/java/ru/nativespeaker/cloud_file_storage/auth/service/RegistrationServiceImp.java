@@ -14,14 +14,14 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class RegistrationServiceImp implements RegistrationService{
+public class RegistrationServiceImp implements RegistrationService {
     private final UserRepository userRepository;
     private final AuthTokenGenerator tokenGenerator;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public Optional<String> register(AuthenticationRequest request) {
-        if(userRepository.existsByEmail(request.getLogin())){
+        if (userRepository.existsByEmail(request.getLogin())) {
             throw new UserAlreadyExistsException("User with " + request.getLogin() + " login already exists");
         }
 

@@ -1,6 +1,7 @@
 package ru.nativespeaker.cloud_file_storage.auth;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,7 +31,8 @@ public class AuthenticationServiceTest {
     public void authenticate_sameToken() {
         String token = "token";
         when(loginService.login(any())).thenReturn(token);
-        assertEquals(token, authenticationService.authenticate(new AuthenticationRequest("login", "password")));
+        assertEquals(token, authenticationService
+                .authenticate(new AuthenticationRequest("login", "password")));
     }
 
     @Test
@@ -38,19 +40,23 @@ public class AuthenticationServiceTest {
         String token = "token";
         when(loginService.login(any())).thenReturn(null);
         when(registrationService.register(any())).thenReturn(token.describeConstable());
-        assertEquals(token, authenticationService.authenticate(new AuthenticationRequest("login", "password")));
+        assertEquals(token, authenticationService
+                .authenticate(new AuthenticationRequest("login", "password")));
     }
 
     @Test
     public void register_shouldReturnSameToken() {
         String token = "token";
         when(registrationService.register(any())).thenReturn(token.describeConstable());
-        assertEquals(token, authenticationService.register(new AuthenticationRequest("login", "password")));
+        assertEquals(token, authenticationService
+                .register(new AuthenticationRequest("login", "password")));
     }
 
     @Test
     public void register_shouldThrowInternalServerException() {
         when(registrationService.register(any())).thenReturn(Optional.empty());
-        assertThrows(InternalServerException.class, () -> authenticationService.register(new AuthenticationRequest("login", "password")));
+        assertThrows(InternalServerException.class,
+                () -> authenticationService.register(
+                        new AuthenticationRequest("login", "password")));
     }
 }
