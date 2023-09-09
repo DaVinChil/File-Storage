@@ -34,7 +34,7 @@ public class RegistrationServiceTest {
 
     @Test
     public void register_shouldReturn() {
-        when(userRepository.existsByEmail(any())).thenReturn(true);
+        when(userRepository.existsByEmail(any())).thenReturn(false);
         when(passwordEncoder.encode(any())).thenReturn("enfpwnd-ewkndsf");
 
         String uuid = UUID.randomUUID().toString();
@@ -50,7 +50,7 @@ public class RegistrationServiceTest {
 
     @Test
     public void register_shouldFail() {
-        when(userRepository.existsByEmail(any())).thenReturn(false);
+        when(userRepository.existsByEmail(any())).thenReturn(true);
         assertThrows(UserAlreadyExistsException.class,
                 () -> registrationService.register(new AuthorizationRequest("login", "password")));
     }

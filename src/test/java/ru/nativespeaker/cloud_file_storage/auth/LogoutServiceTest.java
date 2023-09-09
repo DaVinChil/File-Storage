@@ -52,6 +52,8 @@ public class LogoutServiceTest {
         ArgumentCaptor<AuthToken> valueCapture = ArgumentCaptor.forClass(AuthToken.class);
         doNothing().when(tokenRepository).delete(valueCapture.capture());
 
+        logoutService.logout(null, null, authentication);
+
         assertEquals(token, valueCapture.getValue());
     }
 }
