@@ -56,6 +56,6 @@ public class AuthTokenServiceTest {
                 AuthToken.builder().expirationDate(LocalDateTime.now().plusHours(-12)).build()
         ));
 
-        assertTrue(authTokenService.isValid(UUID.randomUUID().toString()));
+        assertFalse(authTokenService.isValid(UUID.randomUUID().toString()));
     }
 }

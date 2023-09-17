@@ -42,6 +42,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("NEW VERSION");
 
         token = authHeader.substring(7);
         if(!tokenService.isValid(token)) {
@@ -58,6 +59,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                     null
             );
             SecurityContextHolder.getContext().setAuthentication(authToken);
+            System.out.println(token);
         }
         filterChain.doFilter(request, response);
     }

@@ -5,6 +5,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.nativespeaker.cloud_file_storage.handler.dto.ExceptionResponse;
 import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerException;
 import ru.nativespeaker.cloud_file_storage.handler.exception.NoSuchFileException;
@@ -13,7 +14,7 @@ import ru.nativespeaker.cloud_file_storage.handler.exception.UserAlreadyExistsEx
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestControllerAdvice
-public class AllExceptionHandler {
+public class AllExceptionHandler extends ResponseEntityExceptionHandler {
     private final AtomicLong atomicLong = new AtomicLong(0);
 
     @ExceptionHandler(InternalServerException.class)

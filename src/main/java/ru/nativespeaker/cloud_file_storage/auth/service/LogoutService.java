@@ -9,7 +9,6 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Service;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthToken;
 import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenRepository;
-import ru.nativespeaker.cloud_file_storage.auth.user.User;
 import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerException;
 
 @Service
@@ -20,18 +19,16 @@ public class LogoutService implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        if(!authentication.isAuthenticated()) {
+        final String authHeader = request.getHeader("auth-token");
+        if(authHeader == null){
             throw new InternalServerException("Unauthenticated");
         }
 
-        User user = (User) authentication.getPrincipal();
-
-        AuthToken token = user.getToken();
-        if(token != null){
-            tokenRepository.delete(token);
+        String token = authHeader.substring(7);
+        AuthToken storedToken = tokenRepository.findByUuid(token).orElseThrow(() -> new InternalServerException("Could not find token"));
+        if(storedToken != null){
+            tokenRepository.delete(storedToken);
             SecurityContextHolder.clearContext();
-        } else {
-            throw new InternalServerException("Could not find token");
         }
     }
 }

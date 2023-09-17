@@ -59,6 +59,4 @@ public class LoginServiceTest {
         assertEquals(captUser.getPassword(), pass);
         assertEquals(captUser.getToken().getUuid(), token);
     }
-
-
 }

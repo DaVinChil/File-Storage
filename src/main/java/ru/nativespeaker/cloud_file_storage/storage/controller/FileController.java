@@ -2,6 +2,7 @@ package ru.nativespeaker.cloud_file_storage.storage.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,24 +18,24 @@ public interface FileController {
     void uploadFile(@RequestParam(value = "hash", required = false) String hash,
                     @RequestParam(value = "file", required = false) MultipartFile file,
                     @RequestParam("filename") String fileName,
-                    Principal user);
+                    Authentication auth);
 
     @DeleteMapping(value = "/file")
     void deleteFile(@RequestParam("filename") String fileName,
-                    Principal user);
+                    Authentication auth);
 
     @GetMapping(value = "/file", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
     MultiValueMap<String, Object> getFile(@RequestParam("filename") String fileName,
-                          Principal user);
+                                          Authentication auth);
 
     @PutMapping("/file")
     void changeFileName(@RequestParam("filename") String fileName,
                         @RequestBody ChangeFileNameRequest newFileName,
-                        Principal user);
+                        Authentication auth);
 
     @GetMapping("/list")
     List<FileNameSizeDto> getAvailableFileList(@RequestParam("limit") int limit,
-                                               Principal user);
+                                               Authentication auth);
 
     @RequestMapping(value = "/list", method = RequestMethod.OPTIONS)
     void listOptions(HttpServletResponse response);

@@ -1,5 +1,7 @@
 package ru.nativespeaker.cloud_file_storage.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,6 +15,9 @@ import ru.nativespeaker.cloud_file_storage.auth.token.AuthTokenRepository;
 import ru.nativespeaker.cloud_file_storage.auth.user.User;
 import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerException;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -22,37 +27,38 @@ public class LogoutServiceTest {
     @Mock
     private AuthTokenRepository tokenRepository;
 
-    @Mock
-    private Authentication authentication;
-
     @InjectMocks
     private LogoutService logoutService;
 
     @Test
     public void logout_shouldThrowUnauthenticated() {
-        when(authentication.isAuthenticated()).thenReturn(false);
-        assertThrows(InternalServerException.class, () -> logoutService.logout(null, null, authentication));
+        var req = mock(HttpServletRequest.class);
+        when(req.getHeader(any())).thenReturn(null);
+        assertThrows(InternalServerException.class, () -> logoutService.logout(req, null, null));
     }
 
     @Test
-    public void logout_shouldThrowNoToken() {
-        when(authentication.isAuthenticated()).thenReturn(true);
-        when(authentication.getPrincipal()).thenReturn(User.builder().token(null).build());
+    public void logout_shouldThrowNoSuchToken() {
+        var req = mock(HttpServletRequest.class);
+        when(req.getHeader("auth-token")).thenReturn("Bearer " + UUID.randomUUID());
+        when(tokenRepository.findByUuid(any())).thenReturn(Optional.empty());
 
-        assertThrows(InternalServerException.class, () -> logoutService.logout(null, null, authentication));
+        assertThrows(InternalServerException.class, () -> logoutService.logout(req, null, null));
     }
 
     @Test
     public void logout_shouldPassSameToken() {
-        when(authentication.isAuthenticated()).thenReturn(true);
+        var req = mock(HttpServletRequest.class);
+        String uuid = "Bearer " + UUID.randomUUID();
+        when(req.getHeader("auth-token")).thenReturn(uuid);
 
-        AuthToken token = AuthToken.builder().build();
-        when(authentication.getPrincipal()).thenReturn(User.builder().token(token).build());
+        AuthToken token = AuthToken.builder().uuid(uuid).build();
+        when(tokenRepository.findByUuid(any())).thenReturn(Optional.of(token));
 
         ArgumentCaptor<AuthToken> valueCapture = ArgumentCaptor.forClass(AuthToken.class);
         doNothing().when(tokenRepository).delete(valueCapture.capture());
 
-        logoutService.logout(null, null, authentication);
+        logoutService.logout(req, null, null);
 
         assertEquals(token, valueCapture.getValue());
     }

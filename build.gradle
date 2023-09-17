@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'ru.nativespeaker'
-version = '1.0'
+version = '1.2'
 
 java {
 	sourceCompatibility = '17'
@@ -34,6 +34,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'org.testcontainers:junit-jupiter'
 	testImplementation 'org.testcontainers:mysql'
+	implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 }
 
 tasks.named('test') {

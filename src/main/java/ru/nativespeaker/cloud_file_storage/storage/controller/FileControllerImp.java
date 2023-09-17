@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,18 +28,18 @@ public class FileControllerImp implements FileController {
     private final FileService fileService;
 
     @Override
-    public void uploadFile(String hash, MultipartFile file, String fileName, Principal user) {
-        fileService.uploadFile(hash, file, fileName, (User) user);
+    public void uploadFile(String hash, MultipartFile file, String fileName, Authentication auth) {
+        fileService.uploadFile(hash, file, fileName, (User) auth.getPrincipal());
     }
 
     @Override
-    public void deleteFile(String fileName, Principal user) {
-        fileService.deleteFile(fileName, (User) user);
+    public void deleteFile(String fileName, Authentication auth) {
+        fileService.deleteFile(fileName, (User) auth.getPrincipal());
     }
 
     @Override
-    public MultiValueMap<String, Object> getFile(String fileName, Principal user) {
-        UserFile userFile = fileService.getFile(fileName, (User) user);
+    public MultiValueMap<String, Object> getFile(String fileName, Authentication auth) {
+        UserFile userFile = fileService.getFile(fileName, (User) auth.getPrincipal());
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         HttpHeaders contentTypeHeader = new HttpHeaders();
         if(userFile.getHash() != null && !userFile.getHash().isBlank()) {
@@ -54,13 +55,13 @@ public class FileControllerImp implements FileController {
     }
 
     @Override
-    public void changeFileName(String fileName, ChangeFileNameRequest newFileName, Principal user) {
-        fileService.changeFileName(fileName, newFileName.fileName(), (User) user);
+    public void changeFileName(String fileName, ChangeFileNameRequest newFileName, Authentication auth) {
+        fileService.changeFileName(fileName, newFileName.fileName(), (User) auth.getPrincipal());
     }
 
     @Override
-    public List<FileNameSizeDto> getAvailableFileList(int limit, Principal user) {
-        return convertListOfFilesToDto(fileService.getFirstNFiles(limit, (User) user));
+    public List<FileNameSizeDto> getAvailableFileList(int limit, Authentication auth) {
+        return convertListOfFilesToDto(fileService.getFirstNFiles(limit, (User) auth.getPrincipal()));
     }
 
     @Override
