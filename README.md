@@ -13,7 +13,7 @@ If want to run application with local database then change database url, usernam
   ```
 - And run the application
   ```cmd
-    java -jar build/libs/cloud_file_storage-1.0.jar
+    java -jar build/libs/cloud_file_storage-1.2.jar
   ```
 
 ### With Docker Compose
