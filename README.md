@@ -25,6 +25,8 @@ If want to run application with local database then change database url, usernam
   ```cmd
     docker-compose up
   ```
+## Logging
+Logging is performed using log4j in the [logs.log file](logs.log)
 
 ## Contract
 OpenApi 3.0 specification for Cloud File Storage is in [file](CloudFileStorageSpecification.yaml).
@@ -37,3 +39,4 @@ OpenApi 3.0 specification for Cloud File Storage is in [file](CloudFileStorageSp
 - ***Mockito***
 - ***Gradle 8.1***
 - ***Docker 24.0.2***
+- ***Log4j2***
