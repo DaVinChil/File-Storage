@@ -20,7 +20,6 @@ import ru.nativespeaker.cloud_file_storage.storage.service.FileService;
 import ru.nativespeaker.cloud_file_storage.auth.user.User;
 
 import java.nio.charset.StandardCharsets;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
@@ -48,22 +47,11 @@ public class FileControllerImp implements FileController {
     }
 
     @Override
-    public MultiValueMap<String, Object> getFile(String fileName, Authentication auth) {
+    public String getFile(String fileName, Authentication auth) {
         User principal = (User) auth.getPrincipal();
         UserFile userFile = fileService.getFile(fileName, principal);
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        HttpHeaders contentTypeHeader = new HttpHeaders();
-        if(userFile.getHash() != null && !userFile.getHash().isBlank()) {
-            HttpEntity<String> hashPart = new HttpEntity<>(userFile.getHash());
-            body.add("hash", hashPart);
-        }
-        if(userFile.getContent() != null && userFile.getContent().length != 0) {
-            contentTypeHeader.setContentType(MediaType.valueOf(userFile.getFileType()));
-            HttpEntity<String> filePart = new HttpEntity<>(new String(userFile.getContent(), StandardCharsets.UTF_8), contentTypeHeader);
-            body.add("file", filePart);
-        }
         log(principal, RequestMethod.GET.name(), "/file", fileName);
-        return body;
+        return new String(userFile.getContent() == null ? new byte[]{} : userFile.getContent(), StandardCharsets.UTF_8);
     }
 
     @Override

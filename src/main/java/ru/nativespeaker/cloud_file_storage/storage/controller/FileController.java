@@ -25,7 +25,7 @@ public interface FileController {
                     Authentication auth);
 
     @GetMapping(value = "/file", produces = MediaType.MULTIPART_FORM_DATA_VALUE)
-    MultiValueMap<String, Object> getFile(@RequestParam("filename") String fileName,
+    String getFile(@RequestParam("filename") String fileName,
                                           Authentication auth);
 
     @PutMapping("/file")

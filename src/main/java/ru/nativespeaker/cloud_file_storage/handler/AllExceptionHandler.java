@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.tomcat.util.descriptor.web.ContextHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -20,7 +19,6 @@ import ru.nativespeaker.cloud_file_storage.handler.exception.InternalServerExcep
 import ru.nativespeaker.cloud_file_storage.handler.exception.NoSuchFileException;
 import ru.nativespeaker.cloud_file_storage.handler.exception.UserAlreadyExistsException;
 
-import java.security.Principal;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestControllerAdvice
