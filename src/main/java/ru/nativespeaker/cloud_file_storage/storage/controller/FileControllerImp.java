@@ -2,11 +2,13 @@ package ru.nativespeaker.cloud_file_storage.storage.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.Level;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ru.nativespeaker.cloud_file_storage.storage.dto.ChangeFileNameRequest;
@@ -21,25 +23,34 @@ import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @RequiredArgsConstructor
 @RestController
 public class FileControllerImp implements FileController {
+    private final Logger logger = LogManager.getLogger(FileControllerImp.class);
     private final FileService fileService;
+    private final Level REQUEST_LEVEL = Level.forName("request", 1);
 
     @Override
     public void uploadFile(String hash, MultipartFile file, String fileName, Authentication auth) {
-        fileService.uploadFile(hash, file, fileName, (User) auth.getPrincipal());
+        User principal = (User) auth.getPrincipal();
+        fileService.uploadFile(hash, file, fileName, principal);
+        log(principal, RequestMethod.POST.name(), "/file", fileName);
     }
 
     @Override
     public void deleteFile(String fileName, Authentication auth) {
-        fileService.deleteFile(fileName, (User) auth.getPrincipal());
+        User principal = (User) auth.getPrincipal();
+        fileService.deleteFile(fileName, principal);
+        log(principal, RequestMethod.DELETE.name(), "/file", fileName);
     }
 
     @Override
     public MultiValueMap<String, Object> getFile(String fileName, Authentication auth) {
-        UserFile userFile = fileService.getFile(fileName, (User) auth.getPrincipal());
+        User principal = (User) auth.getPrincipal();
+        UserFile userFile = fileService.getFile(fileName, principal);
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         HttpHeaders contentTypeHeader = new HttpHeaders();
         if(userFile.getHash() != null && !userFile.getHash().isBlank()) {
@@ -51,17 +62,23 @@ public class FileControllerImp implements FileController {
             HttpEntity<String> filePart = new HttpEntity<>(new String(userFile.getContent(), StandardCharsets.UTF_8), contentTypeHeader);
             body.add("file", filePart);
         }
+        log(principal, RequestMethod.GET.name(), "/file", fileName);
         return body;
     }
 
     @Override
     public void changeFileName(String fileName, ChangeFileNameRequest newFileName, Authentication auth) {
-        fileService.changeFileName(fileName, newFileName.fileName(), (User) auth.getPrincipal());
+        User principal = (User) auth.getPrincipal();
+        fileService.changeFileName(fileName, newFileName.fileName(), principal);
+        log(principal, RequestMethod.PUT.name(), "/file", fileName + " " + newFileName);
     }
 
     @Override
     public List<FileNameSizeDto> getAvailableFileList(int limit, Authentication auth) {
-        return convertListOfFilesToDto(fileService.getFirstNFiles(limit, (User) auth.getPrincipal()));
+        User principal = (User) auth.getPrincipal();
+        List<FileNameSizeDto> fileNameSizeDtos = convertListOfFilesToDto(fileService.getFirstNFiles(limit, principal));
+        log(principal, RequestMethod.GET.name(), "/list", String.valueOf(limit));
+        return fileNameSizeDtos;
     }
 
     @Override
@@ -75,5 +92,9 @@ public class FileControllerImp implements FileController {
             result.add(new FileNameSizeDto(userFile.getFileName(), userFile.getSize()));
         }
         return result;
+    }
+
+    private void log(User user, String method, String endpoint, String msg) {
+        logger.log(REQUEST_LEVEL, String.format("%30s %8s %20s %s SUCCESS", user.getEmail(), method, endpoint, msg));
     }
 }
