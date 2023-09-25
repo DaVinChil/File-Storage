@@ -47,11 +47,11 @@ public class FileControllerImp implements FileController {
     }
 
     @Override
-    public String getFile(String fileName, Authentication auth) {
+    public byte[] getFile(String fileName, Authentication auth) {
         User principal = (User) auth.getPrincipal();
         UserFile userFile = fileService.getFile(fileName, principal);
         log(principal, RequestMethod.GET.name(), "/file", fileName);
-        return new String(userFile.getContent() == null ? new byte[]{} : userFile.getContent(), StandardCharsets.UTF_8);
+        return userFile.getContent();
     }
 
     @Override
